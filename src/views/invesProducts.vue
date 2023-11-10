@@ -58,7 +58,7 @@ const columns = ref([
     // {data:'user_crea'},
     // {data:'user_mod'},
     {data:'Id', render: (data,type,row,meta) => `
-    <i class="ri-edit-2-line edit-table" onclick="location.href='/medicionesEdit/${data}';"></i>`},
+    <i class="ri-edit-2-line edit-table" onclick="location.href='/InvestProductsEdit/${data}';"></i>`},
 
     {data:'Id', render: (data,type,row,meta,) => `
         <i class="ri-delete-bin-5-line delete-table" onclick="location.href='/invesProductsDelete/${data}';"></i>`},

@@ -16,6 +16,8 @@ import MedicionesCreate from '../views/medicionesCrear.vue'
 import MedicionesEdit from '../views/medicionesEdit.vue'
 import InvestProductsCreate from '../views/InvestProductsCreate.vue'
 import InvesProductsDelete from '../views/InvesProductsDelete.vue'
+import InvestProductsEdit from '../views/InvestProductsEdit.vue'
+
 
 // import {useAuthStore} from '../stores/counter'
 
@@ -76,6 +78,11 @@ const router = createRouter({
       path: '/invesProductsDelete/:key',
       name: 'invesProductsDelete', 
       component: InvesProductsDelete
+    },
+    {
+      path: '/InvestProductsEdit/:key',
+      name: 'InvestProductsEdit', 
+      component: InvestProductsEdit
     },
     {
       path: '/invesAccion',

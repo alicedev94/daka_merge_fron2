@@ -4,69 +4,79 @@ import Top from '../components/Top.vue';
 import axios from 'axios';
 import { ref } from 'vue';
 
-const data = ref({
-    id: localStorage.token,
-    id_medicion: "",
-    id_art: "",
-    id_tipo: "",
-    id_tam_cap: "",
-    id_modelo: "",
-    id_marca: "",
-    descrip: "",
-    cant: "",
-    precio: "",
-    sub_total: 10, // CALCULAR VALOR
-    //cod_sim_daka: "",
-    user_crea: localStorage.usuario, // AQUI VA EL LOCALSTORAGE.USER_CREA
-    // FECHA DE CREACION ESTOS VALORES SE CREAN POR DEFECTO
-    user_mod: localStorage.usuario // AQUI VA EL LOCALSTORAGE.USER_CREA
-    // FECHA DE MODIFICACION ESTOS VALORES SE CREAN POR DEFECTO
+import {  useRoute, useRouter } from 'vue-router'
+
+// LIBRERIAS
+import {  onMounted } from 'vue';
+const route = useRoute()
+
+// URL
+const id = ref('')
+id.value = route.params.key 
+//console.log(id.value)
+
+// const data = ref({
+//     id: "",
+//     nombre: "",
+//     email: "",
+//     password: "",
+//     password2: "",
+//     rol: ""
+// });
+
+const data = ref ({
+  Id:"",
+  id_medicion:"",
+  id_art:"",
+  id_tipo:"",
+  id_tam_cap:"",
+  id_marca:"",
+  id_modelo:"",
+  descrip:"",
+  cant:"",
+  precio:"",
+  sub_total:"",
+  cod_sim_daka:"",
+  user_crea:"",
+  user_mod:"",
+  createdAt:""
 });
 
-// SELCCIONAR DATOS -------------------------------------------------------------------------- //
-// AL CARGAR LA PAGINA SE EJECUTA LA FUNCION PRINCIPAL QUE LLENA EL PRIMER INPUT
-const idMedicion = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: '45215847', value: '45215847' },
-]);
-const idInvestigacion = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: '24598756', value: '24598756' },
-]);
-const codigoArticulo = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: 'REFRIGERADORES', value: '309' },
-]);
-const tipoArticulo = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: 'NEVERAS', value: '1' },
-    { label: 'CONGELADORES', value: '2' },
-    { label: 'FABRICADOR DE HIELO', value: '3' },
-    { label: 'VINERA', value: '4' },
-    { label: 'NEVERA EJECUTIVA', value: '5' },
-    { label: 'NEVERA EXHIBIDORA', value: '6' },
-    { label: 'CENTRO DE BEBIDAS', value: '7' },
-]);
-const tam_cap = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: '12 PIES', value: '1' },
-    { label: '14 PIES', value: '2' },
-    { label: '18 PIES', value: '3' },
-]);
-const modelo = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: 'RT38K5930S8AP-5', value: '1' },
-]);
-const marcas = ref([
-    // ESTE ES EL FORMATO QUE DEBE RECIBIR EL INPUT PARA PODER SER LLENO CORRECTAMENTE
-    { label: 'SAMSUNG', value: '1' },
-]);
-// SELCCIONAR DATOS -------------------------------------------------------------------------- //
+async function getInvestProductsId() {
+    try {
+        // CONSULTAR LA TABLA DE USUARIOS
+        const response = await axios.get(`http://localhost:3001/api/v1/investProducts/${id.value}`);
+        console.log(response.data)
+        //info.value = response.data
+        data.value.Id = response.data.Id;
+        data.value.id_medicion = response.data.id_medicion;
+        data.value.id_art = response.data.id_art;
+        data.value.id_tipo = response.data.id_tipo;
+        data.value.id_tam_cap = response.data.id_tam_cap;
+        data.value.id_marca = response.data.id_marca;
+        data.value.id_modelo = response.data.id_modelo;
+        data.value.descrip = response.data.descrip;
+        data.value.cant = response.data.cant;
+        data.value.precio = response.data.precio;
+        data.value.sub_total = response.data.sub_total;
+        data.value.cod_sim_daka = response.data.cod_sim_daka;
+        data.value.user_crea = response.data.user_crea;
+        data.value.user_mod = response.data.user_mod;
+        data.value.createdAt = response.data.createdAt;
+    } catch (error) {
+        //EN CASO DE QUE DE UN ERROR
+        //console.log(error)
+        alert("Error no controlado.!");
+    }
+}
+
+onMounted(async () => {
+    //await getInvestProductsId();
+});
 
 const handleSubmit = async () => {
-    console.log(data.value);
-    // // // Usando promesas
-    axios.post('http://localhost:3001/api/v1/investProducts/create', data.value)
+    // // Usando promesas
+    axios.post('http://localhost:3001/api/v1/update/user', data.value) // AQUI
         .then(response => {
             let rtaFromMysqlDb = Object.keys(response.data)
             let error = rtaFromMysqlDb.includes("errors");
@@ -78,7 +88,7 @@ const handleSubmit = async () => {
                 alert("Usuario registrado con exito.!");
                 window.location.reload();
             }
-
+        
         })
         .catch(error => {
             // Hacer algo con el error
@@ -91,9 +101,8 @@ const handleIconClick = (node, e) => {
     node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye'
     node.props.type = node.props.type === 'password' ? 'text' : 'password'
 }
-
-
 </script>
+
 <template>
     <Nav :class="{ close: valor }" />
     <section class="dashboard">
@@ -203,6 +212,7 @@ const handleIconClick = (node, e) => {
         <br>
     </section>
 </template>
+
 
 <style>
 [data-invalid] .formkit-inner {
