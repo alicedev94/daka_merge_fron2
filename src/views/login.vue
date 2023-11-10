@@ -19,7 +19,7 @@
 //         password: this.password,
 //       };
 
-//       axios.post("http://localhost:3000/auth", json).then((data) => {
+//       axios.post("http://149.50.131.95:3000/auth", json).then((data) => {
 //         if (data.data.status == "ok") { 
 //           sessionStorage.token = data.data.token;
 //           this.$router.push("dashboard");

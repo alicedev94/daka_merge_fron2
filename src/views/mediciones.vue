@@ -22,7 +22,7 @@ id.value = route.params.key
 // FUNCTION PARA LLENAR TABLE
 async function getMedicion() {
     try {
-        const response = await axios.get(`http://localhost:3001/api/v1/medicionAll`);
+        const response = await axios.get(`http://149.50.131.95:3001/api/v1/medicionAll`);
 
         info.value = response.data
 
@@ -39,7 +39,7 @@ async function getMedicion() {
 async function eliminarMedicion(key) {
 
     try {
-        const response = await axios.delete(`http://localhost:3001/api/v1/mediciondelete/${key}`);
+        const response = await axios.delete(`http://149.50.131.95:3001/api/v1/mediciondelete/${key}`);
     } catch (error) {
         console.log(error)
     }

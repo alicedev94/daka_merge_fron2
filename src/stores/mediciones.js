@@ -15,7 +15,7 @@ export const MedicionCrud = defineStore('m', {
   actions:{
       // CREAR USUARIO
       async medicionCreate(jsonM){
-          await axios.post(`http://localhost:3001/api/v1/medicionDiaria`, jsonM).then( 
+          await axios.post(`http://149.50.131.95:3001/api/v1/medicionDiaria`, jsonM).then( 
             (res) => {
                 
               if(res.data.status === 'ok'){
@@ -58,7 +58,7 @@ export const MedicionCrud = defineStore('m', {
       // EDITAR
       async medicionEditar(id, jsonE){
 
-          await axios.put(`http://localhost:3001/api/v1/medicionUpdate/${id.value}`, jsonE).then( 
+          await axios.put(`http://149.50.131.95:3001/api/v1/medicionUpdate/${id.value}`, jsonE).then( 
           (res) => {
   
             if(res.data.status === 'ok'){
